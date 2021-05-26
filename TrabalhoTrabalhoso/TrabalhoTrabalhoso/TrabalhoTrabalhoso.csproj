@@ -87,9 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aluno.cs" />
-    <Compile Include="Curso.cs" />
+    <Compile Include="Conexao.cs" />
+    <Compile Include="Disciplina.cs" />
     <Compile Include="Escola.cs" />
-    <Compile Include="Nota.cs" />
     <Compile Include="Professor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,35 +1,98 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 
 namespace TrabalhoTrabalhoso
 {
     public class RepositorioMySQL
     {
-        public void Inserir(Curso curso)
-        {   //conectando ao banco de dados do professor com um método vazio notas...
-            MySqlConnection conexao = new MySqlConnection("Server=MYSQL5030.site4now.net;Port=3306;Database=db_a2d8fc_aula;Uid=a2d8fc_aula;Pwd=abc12345;");
+        public void Inserir(Aluno aluno)
+        {   //conectando ao banco de dados do professor com um método inserir...
+            Conexao C = new Conexao();
 
-            conexao.Open();
-            // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
+            MySqlConnection conexao = new MySqlConnection("Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
+            try
+            {
 
-            MySqlCommand comando = new MySqlCommand("INSERT INTO curso (curso ) VALUES (@Curso)", conexao);
-            // Executando (Efetivando) o comando criando anteriormente
-            comando.Parameters.AddWithValue("@Curso", curso.Cursoo);
 
-            comando.ExecuteNonQuery();
+                conexao.Open();
 
-            // Fechando a conexão com o banco de dados ();;
-            conexao.Close();
+                // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
+
+                MySqlCommand comando = new MySqlCommand($"INSERT INTO aluno (NomeAluno, Cpf, Email ) VALUES (@NomeAluno, @CpfAluno,EmailAluno)", conexao);
+                // Executando (Efetivando) o comando criando anteriormente
+                comando.Parameters.AddWithValue("@Aluno", aluno.NomeAluno);
+                comando.Parameters.AddWithValue("@Aluno", aluno.EmailAluno);
+                comando.Parameters.AddWithValue("@Aluno", aluno.CpfAluno);
+
+                comando.ExecuteNonQuery();
+
+
+            }
+            catch
+            {
+                System.Console.WriteLine("Não foi possível inserir os dados...");
+            }
+            finally
+            {
+                // Fechando a conexão com o banco de dados ();;
+                conexao.Close();
+            }
+
+
+
+
         }
         public void Apagar(int id)
         {
-            MySqlConnection conexao = new MySqlConnection(@"");
+            MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
             conexao.Open();
-            MySqlCommand comando = new MySqlCommand("DELETE FROM curso WHERE id_curso = @id", conexao);
-            comando.Parameters.AddWithValue("@id", id);
-            comando.ExecuteNonQuery();
-            conexao.Close();
+            try
+            {
+                MySqlCommand comando = new MySqlCommand("DELETE FROM aluno WHERE id_aluno = @id", conexao);
+                comando.Parameters.AddWithValue("@id", id);
+                comando.ExecuteNonQuery();
+            }
+            catch
+            {
+                System.Console.WriteLine("Não foi possível deletar");
+            }
+            finally
+            {
+                conexao.Close();
+            }
+
+               List<Aluno> Listar()
+            {
+                // Criando a lista de alunos vazia
+                // Abrindo a conexão com o banco de dados;
+                conexao.Open();
+                // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
+                List<Aluno> alunos = new List<Aluno>();
+                MySqlCommand comando = new MySqlCommand("SELECT * FROM aluno", conexao);
+                // Executando (Efetivando) o comando criando anteriormente e salvando os dados no Data Reader
+                MySqlDataReader reader = comando.ExecuteReader();
+                // Em posse do Data Reader, vou ler os dados, sempre do primeiro até o último e "pra frente"
+                while (reader.Read())
+                {
+                    // Instanciando um objeto chamado "aluno" da classe "Aluno"
+                    Aluno aluno = new Aluno ();
+                    // Buscando a informação ID do Banco de dados e salvando no atributo correspondente
+                    aluno.NomeAluno = reader.GetString("NomeAluno");
+                    // Buscando a informação Nome do Banco de dados e salvando no atributo correspondente
+                    // Buscando a informação Email do Banco de dados e salvando no atributo correspondente
+                    aluno.EmailAluno = reader.GetString("EmailAluno");
+                    // Buscando a informação CPF do Banco de dados e salvando no atributo correspondente
+                    aluno.CpfAluno = reader.GetInt32("CpfAluno");
+                    // Adicionando este objeto à lista de alunos (chamada "alunos)
+                    alunos.Add(aluno);
+                }
+                // Fechando a conexão com o banco de dados (Tem que fechar sempre);
+                conexao.Close();
+                // Retornando a lista de clientes (agora totalmente preenchida)
+                return alunos;
+            }
         }
+
     }
-        
 }

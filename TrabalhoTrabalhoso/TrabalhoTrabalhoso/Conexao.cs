@@ -12,7 +12,7 @@ namespace TrabalhoTrabalhoso
     {
         public MySqlConnection Conectar()
         {    //Método que retorna a conexão do banco foi criado uma classe para separar os códigos...
-            MySqlConnection conexao = new MySqlConnection("Server=MYSQL5030.site4now.net;Port=3306;Database=db_a2d8fc_aula;Uid=a2d8fc_aula;Pwd=abc12345;");
+            MySqlConnection conexao = new MySqlConnection("Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
             return conexao;
         }
     }

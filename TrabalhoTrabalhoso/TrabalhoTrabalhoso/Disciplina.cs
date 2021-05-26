@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace TrabalhoTrabalhoso
 {
-    public class Curso
+    public class Disciplina
     {
-      
-        public string Cursoo { get; set; }
-
+        public string Nome { get; set; }
     }
 }
