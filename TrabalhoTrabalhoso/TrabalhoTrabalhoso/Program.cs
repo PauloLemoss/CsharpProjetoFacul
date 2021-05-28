@@ -18,7 +18,7 @@ namespace TrabalhoTrabalhoso
                 Console.WriteLine("Escolha uma opção:");
                 // Mudando a cor de fundo do texto para Azul
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("_______________________ CLIENTES __________________________________");
+                Console.WriteLine("_______________________ ALUNOS __________________________________");
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 Console.WriteLine("1 - Inserir Aluno");
                 Console.WriteLine("2 - Deletar Aluno");
@@ -27,10 +27,10 @@ namespace TrabalhoTrabalhoso
                 Console.WriteLine("5 - Alterar Aluno");
                 Console.WriteLine("6 - Contar Aluno");
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("_______________________ CARROS DOS CLIENTES _______________________");
+                Console.WriteLine("_______________________ DISCIPLINA DOS ALUNOS  _______________________");
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("7 - Inserir Carro para um dos Clientes");
-                Console.WriteLine("8 - Listar todos os carros do Cliente");
+                Console.WriteLine("7 - Inserir Disciplina para um dos Alunos");
+                Console.WriteLine("8 - Listar todas as Disciplinas dos Alunos");
                 // Voltando a cor do texto para a cor padrão
                 Console.ResetColor();
                 // Instanciar o meu repositório
@@ -43,7 +43,7 @@ namespace TrabalhoTrabalhoso
                             Console.Clear();
 
                             // Instanciar o Cliente
-                             Aluno aluno = new Aluno();
+                            Aluno aluno = new Aluno();
                             // Solicitar o nome do aluno
                             Console.WriteLine("Informe o seu nome:");
                             // Ober o nome do aluno (digitado no teclado)
@@ -63,7 +63,7 @@ namespace TrabalhoTrabalhoso
                         case '2':
                             Console.Clear();
                             // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            ListarClientes(repositorio);
+                            ListarAlunos(repositorio);
                             // Perguntar ao usuário qual é o ID que ele deseja deletar
                             Console.WriteLine("Informe o ID do usuário que você deseja deletar:");
                             // Chamar o método deletar, passando o ID informado pelo usuário
@@ -72,18 +72,18 @@ namespace TrabalhoTrabalhoso
                         case '3':
                             Console.Clear();
                             // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            ListarClientes(repositorio);
+                            ListarAlunos(repositorio);
                             break;
                         case '4':
                             Console.Clear();
                             // Perguntar o nome que deseja consultar
                             Console.WriteLine("Informe o nome que deseja consultar:");
                             // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Aluno clienteDaVez in repositorio.Listar(Console.ReadLine()))
+                            foreach (Aluno AlunoDaVez in repositorio.Listar(Console.ReadLine()))
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
-                                // Cliente ...
-                                Console.WriteLine(clienteDaVez.ToString());
+                                // Aluno ...
+                                Console.WriteLine(AlunoDaVez.ToString());
                             }
                             break;
                         case '5':
@@ -93,24 +93,24 @@ namespace TrabalhoTrabalhoso
                             // Obtendo a lista de Clientes
                             List<Aluno> listaDeAlunos = repositorio.Listar(Console.ReadLine());
                             // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Cliente clienteDaVez in listaDeClientes)
+                            foreach (Aluno alunoDaVez in listaDeAlunos)
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Cliente ...
-                                Console.WriteLine(clienteDaVez.ToString());
+                                Console.WriteLine(alunoDaVez.ToString());
                             }
-                            if (listaDeClientes != null && listaDeClientes.Count > 0)
+                            if (listaDeAlunos != null && listaDeAlunos.Count > 0)
                             {
                                 // Solicitar o ID de qual dos clientes listados deseja alterar:
-                                Console.WriteLine("Informe, pelo ID, qual dos clientes acima você deseja alterar:");
+                                Console.WriteLine("Informe, pelo ID, qual dos alunos acima você deseja alterar:");
                                 // Buscar, na lista de Clientes, pelo Id, o objeto cliente relacionado ...
-                                Cliente clienteAlterar = listaDeClientes.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
+                                Aluno AlunoAlterar = listaDeAlunos.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
                                 // Solicitar o novo nome
-                                Console.WriteLine($"Informe o nome nome para {clienteAlterar.Nome}:");
+                                Console.WriteLine($"Informe o nome nome para {AlunoAlterar.NomeAluno}:");
                                 // Alterando a Propriedade Nome do Cliente encontrado ...
-                                clienteAlterar.Nome = Console.ReadLine();
+                                AlunoAlterar.NomeAluno = Console.ReadLine();
                                 // Efetivando a alteração no Banco de Dados
-                                repositorio.Alterar(clienteAlterar);
+                                repositorio.Alterar(AlunoAlterar);
                             }
                             else
                             {
@@ -121,37 +121,33 @@ namespace TrabalhoTrabalhoso
                         case '6':
                             Console.Clear();
                             // Informando a quantidade de Clientes registrados, através do método Obter Quantidade ...
-                            Console.WriteLine($"Total de Clientes registrados: {repositorio.ObterQuantidadeDeClientes()}");
+                            Console.WriteLine($"Total de Clientes registrados: {repositorio.ObterQuantidadeDeAlunos()}");
                             break;
                         case '7':
                             Console.Clear();
                             // Perguntar o nome que deseja adicionar carro ...
                             Console.WriteLine("Informe o nome do cliente para adcionar um Novo Carro:");
                             // Obtendo a lista de Clientes
-                            List<Cliente> listaDeClientesCarros = repositorio.Listar(Console.ReadLine());
+                            List<Aluno> listaDeClientesCarros = repositorio.Listar(Console.ReadLine());
                             // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Cliente clienteDaVez in listaDeClientesCarros)
+                            foreach (Aluno AlunoDaVez in listaDeClientesCarros)
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Cliente ...
-                                Console.WriteLine(clienteDaVez.ToString());
+                                Console.WriteLine(AlunoDaVez.ToString());
                             }
                             if (listaDeClientesCarros != null && listaDeClientesCarros.Count > 0)
                             {
                                 // Solicitar o ID de qual dos clientes listados deseja Adicionar um Novo Carro:
                                 Console.WriteLine("Informe, pelo ID, qual dos clientes acima você deseja Adicionar um Novo Carro:");
                                 // Buscar, na lista de Clientes, pelo Id, o objeto cliente relacionado ...
-                                Cliente clienteAdicionarCarro = listaDeClientesCarros.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
-                                Carro carro = new Carro();
-                                Console.WriteLine("Informe a Marca do Carro:");
-                                carro.Marca = Console.ReadLine();
-                                Console.WriteLine("Informe a Modelo do Carro:");
-                                carro.Modelo = Console.ReadLine();
-                                Console.WriteLine("Informe a Placa do Carro:");
-                                carro.Placa = Console.ReadLine();
+                                Aluno AlunoAdicionaraDisciplina = listaDeClientesCarros.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
+                                Disciplina disciplina = new Disciplina();
+                                Console.WriteLine("Informe qual é a disciplina:");
+                                disciplina.NomeDisciplina = Console.ReadLine();
                                 clienteAdicionarCarro.Carros = new List<Carro>();
                                 clienteAdicionarCarro.Carros.Add(carro);
-                                repositorio.InserirCarro(clienteAdicionarCarro);
+                                repositorio.InserirDisciplina(clienteAdicionarCarro);
                             }
                             else
                             {
@@ -164,20 +160,20 @@ namespace TrabalhoTrabalhoso
                             // Perguntar o nome que deseja consultar
                             Console.WriteLine("Informe o Cliente cujo qual você deseja listar os carros:");
                             // Obtendo a lista de Clientes
-                            List<Cliente> listaDeCarrosDoCliente = repositorio.Listar(Console.ReadLine());
+                            List<Aluno> listaDeCarrosDoCliente = repositorio.Listar(Console.ReadLine());
                             // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Cliente clienteDaVez in listaDeCarrosDoCliente)
+                            foreach (Aluno AlunoDaVez in listaDeCarrosDoCliente)
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Cliente ...
-                                Console.WriteLine(clienteDaVez.ToString());
+                                Console.WriteLine(AlunoDaVez.ToString());
                             }
                             if (listaDeCarrosDoCliente != null && listaDeCarrosDoCliente.Count > 0)
                             {
                                 // Solicitar o ID de qual dos clientes listados deseja alterar:
                                 Console.WriteLine("Informe, pelo ID, qual dos clientes acima você deseja listar os carros:");
                                 // Buscar, na lista de Clientes, pelo Id, o objeto cliente relacionado ...
-                                Cliente clienteListarCarro = listaDeCarrosDoCliente.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
+                                Aluno clienteListarCarro = listaDeCarrosDoCliente.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
                                 List<Carro> carros = repositorio.ListarCarros(clienteListarCarro.Id);
                                 foreach (Carro carro in carros)
                                 {
@@ -189,7 +185,6 @@ namespace TrabalhoTrabalhoso
                                 // Caso a lista de Clientes não retorne nenhum registro, exibir mensagem abaixo.
                                 Console.WriteLine("Nenhum registro encontrado ...");
                             }
-                            break;
                             break;
                         default:
                             Console.Clear();
@@ -231,18 +226,15 @@ namespace TrabalhoTrabalhoso
             } while (Console.ReadKey().KeyChar == 's');
         }
 
-        public static void ListarClientes(RepositorioMySQL repositorio)
+        public static void ListarAlunos(RepositorioMySQL repositorio)
         {
-            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-            foreach (Cliente clienteDaVez in repositorio.Listar())
+            // Listando todos os alunos retornados pela lista de aluno através do método repositorio.Listar()
+            foreach (Aluno AlunoDaVez in repositorio.Listar())
             {
-                // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
-                // Cliente ...
-                Console.WriteLine(clienteDaVez.ToString());
+                // Imprimindo as informações de cada aluno na tela, utilizando o "ToString" que foi sobrescrito na classe
+                // Aluno ...
+                Console.WriteLine(AlunoDaVez.ToString());
             }
         }
-
-
-    }
     }
 }

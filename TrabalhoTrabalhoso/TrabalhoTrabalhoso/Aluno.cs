@@ -10,8 +10,10 @@ namespace TrabalhoTrabalhoso
     {
        public  string NomeAluno { get; set; }
        public int CpfAluno { get; set; }
+        public string IdAluno { get; set; }
        
        public string EmailAluno { get; set; }
+        public List<Turma> Turmas { get; set; }
 
         public override string ToString()
         {

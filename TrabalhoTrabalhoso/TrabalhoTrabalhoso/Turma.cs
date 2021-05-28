@@ -8,10 +8,32 @@ namespace TrabalhoTrabalhoso
 {
     class Turma
     {
-        public string IdTurma { get; set; }
+        public int Id { get; set; }
         public string NomeTurma { get; set; }
-        public string IdProfessor { get; set; }
-        public string IdMatricula { get; set; }
-        public string IdCurso { get; set; }
+        public int IdProfessor { get; set; }
+        public int IdAluno { get; set; }
+        public int IdDisciplina { get; set; }
+        public Turma() { }
+
+        public Turma(int id, string nomeTurma, int idProfessor, int idAluno, int idDisciplina)
+        {
+            Id = id;
+            NomeTurma = nomeTurma;
+            IdProfessor = idProfessor;
+            IdAluno = idAluno;
+            IdDisciplina = idDisciplina;
+        }
+
+        public Turma(string nomeTurma, int idProfessor, int idAluno, int idDisciplina)
+        {
+            NomeTurma = nomeTurma;
+            IdProfessor = idProfessor;
+            IdAluno = idAluno;
+            IdDisciplina = idDisciplina;
+        }
+        public override string ToString()
+        {
+            return string.Format($"{Id} {NomeTurma} {IdProfessor} {IdAluno} { IdDisciplina}");
+        }
     }
 }
