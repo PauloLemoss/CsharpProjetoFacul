@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace TrabalhoTrabalhoso
 {
     public class Disciplina
-    {
+    {   
         public string NomeDisciplina { get; set; }
+        public string IdDisciplina { get; set; }
+       
     }
 }

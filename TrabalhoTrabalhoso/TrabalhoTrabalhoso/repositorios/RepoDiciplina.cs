@@ -1,13 +1,13 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using Conexao.Conexao;
+using Disciplina.Disciplina
 
 namespace TrabalhoTrabalhoso
 {
-    public class RepositorioMySQL
+    public class ReposDisciplina
     {
-        public void Inserir(Aluno aluno)
+        public void Inserir(Disciplina disciplina)
         {   //conectando ao banco de dados do professor com um método inserir...
             Conexao C = new Conexao();
 
@@ -22,9 +22,8 @@ namespace TrabalhoTrabalhoso
 
                 MySqlCommand comando = new MySqlCommand($"INSERT INTO aluno (NomeAluno, Cpf, Email ) VALUES (@NomeAluno, @CpfAluno,EmailAluno)", conexao);
                 // Executando (Efetivando) o comando criando anteriormente
-                comando.Parameters.AddWithValue("@NomeAluno", aluno.NomeAluno);
-                comando.Parameters.AddWithValue("@EmailAluno", aluno.EmailAluno);
-                comando.Parameters.AddWithValue("@CpfAluno", aluno.CpfAluno);
+                comando.Parameters.AddWithValue("@NomeAluno", disciplina.NomeDisciplina);
+               
 
                 comando.ExecuteNonQuery();
 
@@ -44,7 +43,7 @@ namespace TrabalhoTrabalhoso
 
 
         }
-        public void Alterar(Aluno aluno)
+        public void Alterar(Disciplina disciplina)
         {
             // Bloco do Try: Tentando abrir conexão e realizar comando no Banco de Dados
             try
@@ -55,14 +54,11 @@ namespace TrabalhoTrabalhoso
                 // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
                 MySqlCommand comando = new MySqlCommand(string.Format($"UPDATE aluno SET NomeAluno = @NomeAluno, Cpf = @Email, =  WHERE id_aluno = @Id"), conexao);
                 // Adicionando parâmetro SQL para o Id
-                comando.Parameters.AddWithValue("@Id", aluno.IdAluno);
+                comando.Parameters.AddWithValue("@Id", disciplina.IdDisciplina);
                 // Adicionando parâmetro SQL para o Nome
-                comando.Parameters.AddWithValue("@Nome", aluno.NomeAluno);
+                comando.Parameters.AddWithValue("@Nome", disciplina.NomeDisciplina);
                 // Adicionando parâmetro SQL para o Email
-                comando.Parameters.AddWithValue("@Email", aluno.EmailAluno);
-                // Adicionando parâmetro SQL para a idade
-                comando.Parameters.AddWithValue("@Cpf", aluno.CpfAluno);
-                // Executando (Efetivando) o comando criando anteriormente
+               
                 comando.ExecuteNonQuery();
             }
             //tratando possíveis erros
@@ -90,7 +86,7 @@ namespace TrabalhoTrabalhoso
                 //Excluindo o registro
                 conexao.Open();
                 MySqlCommand comando = new MySqlCommand("DELETE FROM aluno WHERE id_aluno = @id", conexao);
-                comando.Parameters.AddWithValue("@id", id);
+                comando.Parameters.AddWithValue("@Id", disciplina.IdDisciplina);
                 comando.ExecuteNonQuery();
             }
             catch
@@ -103,10 +99,10 @@ namespace TrabalhoTrabalhoso
             }
         }
         //Método listar, cujo parâmetro nome é "opcional"
-        public List<Aluno> Listar(string nome = null)
+        public List<Disciplina> Listar(string nome = null)
         {
             // Criando a lista de clientes vazia
-            List<Aluno> alunos = new List<Aluno>();
+            List<Disciplina> disciplinas = new List<Disciplina>();
             // Bloco do Try: Tentando abrir conexão e realizar comando no Banco de Dados
             try
             {
@@ -136,7 +132,7 @@ namespace TrabalhoTrabalhoso
                 while (reader.Read())
                 {
                     // Instanciando um objeto chamado "aluno" da classe "Aluno"
-                    Aluno aluno = new Aluno();
+                    Disciplina disciplina = new Disciplina();
                     // Buscando a informação ID do Banco de dados e salvando no atributo correspondente
                     aluno.IdAluno = reader.GetString("Id");
                     // Buscando a informação Nome do Banco de dados e salvando no atributo correspondente
