@@ -13,7 +13,7 @@ namespace TrabalhoTrabalhoso
        public string IdAluno { get; set; }
        
        public string EmailAluno { get; set; }
-        public List<Turma> Turmas { get; set; }
+        
 
         public override string ToString()
         {

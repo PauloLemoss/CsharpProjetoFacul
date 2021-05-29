@@ -9,8 +9,10 @@ namespace TrabalhoTrabalhoso
     class Professor
     {
         public string IdProfessor { get; set; }
-        public string Professor2 { get; set; }
+        public string NomeProfessor { get; set; }
+        public string CpfProf { get; set; }
+        public string EmailProf { get; set; }
 
-        public int FoneProfessor { get; set; }
+      
     }
 }

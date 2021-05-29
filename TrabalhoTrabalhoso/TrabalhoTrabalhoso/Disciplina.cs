@@ -8,8 +8,9 @@ namespace TrabalhoTrabalhoso
 {
     public class Disciplina
     {   
+         public string IdDisciplina { get; set; }
         public string NomeDisciplina { get; set; }
-        public string IdDisciplina { get; set; }
+       
        
     }
 }

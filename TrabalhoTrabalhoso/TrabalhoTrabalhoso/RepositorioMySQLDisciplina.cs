@@ -7,9 +7,9 @@ namespace TrabalhoTrabalhoso
 {
     public class RepositorioMySQL
     {
-        public void Inserir(Aluno aluno)
-        {   //conectando ao banco de dados do professor com um método inserir...
-            Conexao C = new Conexao();
+        public void Inserir(Disciplina disciplina)
+        {   //conectando ao banco de dados um método inserir...
+           
 
             MySqlConnection conexao = new MySqlConnection("Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
             try
@@ -20,11 +20,10 @@ namespace TrabalhoTrabalhoso
 
                 // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
 
-                MySqlCommand comando = new MySqlCommand($"INSERT INTO aluno (NomeAluno, Cpf, Email ) VALUES (@NomeAluno, @CpfAluno,EmailAluno)", conexao);
+                MySqlCommand comando = new MySqlCommand($"INSERT INTO discplina (NomeDisciplina) VALUES (@NomeDisciplina)", conexao);
                 // Executando (Efetivando) o comando criando anteriormente
-                comando.Parameters.AddWithValue("@NomeAluno", aluno.NomeAluno);
-                comando.Parameters.AddWithValue("@EmailAluno", aluno.EmailAluno);
-                comando.Parameters.AddWithValue("@CpfAluno", aluno.CpfAluno);
+                comando.Parameters.AddWithValue("@NomeDisciplina", disciplina.NomeDisciplina);
+               
 
                 comando.ExecuteNonQuery();
 
@@ -44,25 +43,21 @@ namespace TrabalhoTrabalhoso
 
 
         }
-        public void Alterar(Aluno aluno)
+        public void Alterar(Disciplina disciplina)
         {
-            // Bloco do Try: Tentando abrir conexão e realizar comando no Banco de Dados
-            try
+             MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
             {
-                MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
+               
                 // Abrindo a conexão com o banco de dados;
                 conexao.Open();
                 // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
-                MySqlCommand comando = new MySqlCommand(string.Format($"UPDATE aluno SET NomeAluno = @NomeAluno, Email=@Email, Cpf=@Cpf, =  WHERE id_aluno = @Id"), conexao);
+                MySqlCommand comando = new MySqlCommand(string.Format($"UPDATE disciplina SET NomeDisciplina = @NomeDisciplina WHERE id_disciplina = @Id"), conexao);
                 // Adicionando parâmetro SQL para o Id
-                comando.Parameters.AddWithValue("@Id", aluno.IdAluno);
-                // Adicionando parâmetro SQL para o Nome
-                comando.Parameters.AddWithValue("@Nome", aluno.NomeAluno);
-                // Adicionando parâmetro SQL para o Email
-                comando.Parameters.AddWithValue("@Email", aluno.EmailAluno);
-                // Adicionando parâmetro SQL para a idade
-                comando.Parameters.AddWithValue("@Cpf", aluno.CpfAluno);
-                // Executando (Efetivando) o comando criando anteriormente
+                comando.Parameters.AddWithValue("@Id", disciplina.IdDisciplina);
+                // Adicionando parâmetro SQL para o Nome da disciplina
+                comando.Parameters.AddWithValue("@NomeDisciplina", disciplina.NomeDisciplina);
+               
+             
                 comando.ExecuteNonQuery();
             }
             //tratando possíveis erros
@@ -74,7 +69,7 @@ namespace TrabalhoTrabalhoso
             // Conseguindo ou não realizar as opções, executar o Finally (Fechando a conexão)
             finally
             {
-                MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
+                
                 // Fechando a conexão com o banco de dados (Tem que fechar sempre);
                 conexao.Close();
             }
@@ -89,7 +84,7 @@ namespace TrabalhoTrabalhoso
             {
                 //Excluindo o registro
                 conexao.Open();
-                MySqlCommand comando = new MySqlCommand("DELETE FROM aluno WHERE id_aluno = @id", conexao);
+                MySqlCommand comando = new MySqlCommand("DELETE FROM disciplina WHERE id_disciplina = @id", conexao);
                 comando.Parameters.AddWithValue("@id", id);
                 comando.ExecuteNonQuery();
             }
@@ -103,14 +98,15 @@ namespace TrabalhoTrabalhoso
             }
         }
         //Método listar, cujo parâmetro nome é "opcional"
-        public List<Aluno> Listar(string nome = null)
-        {
+        public List<Disciplina> Listar(string disciplina = null)
+        { 
+            MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
             // Criando a lista de clientes vazia
-            List<Aluno> alunos = new List<Aluno>();
+            List<Disciplina> alunos = new List<Disciplina>();
             // Bloco do Try: Tentando abrir conexão e realizar comando no Banco de Dados
             try
             {
-                MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
+               
                 // Abrindo a conexão com o banco de dados;
                 conexao.Open();
                 // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
@@ -119,16 +115,16 @@ namespace TrabalhoTrabalhoso
                 if (nome == null)
                 {
                     // Comando retornando todos os clientes ser "WHERE"
-                    comando = new MySqlCommand("SELECT * FROM aluno", conexao);
+                    comando = new MySqlCommand("SELECT * FROM disciplina", conexao);
                 }
                 // Comando SQL em caso do parâmetro "Nome" não ser NULL
                 else
                 {
                     // Comando retornando todos os alunos com "WHERE", cujo
                     // Nome é igual ao informado pelo parâmetro
-                    comando = new MySqlCommand("SELECT * FROM aluno WHERE nome LIKE @Nome", conexao);
+                    comando = new MySqlCommand("SELECT * FROM disciplina WHERE NomeDisciplina LIKE @Nome", conexao);
                     // Adicionando parâmetro SQL para o Nome
-                    comando.Parameters.AddWithValue("@Nome", string.Format($"%{nome}%"));
+                    comando.Parameters.AddWithValue("@NomeDisciplina", string.Format($"%{disciplina}%"));
                 }
                 // Executando (Efetivando) o comando criando anteriormente e salvando os dados no Data Reader
                 MySqlDataReader reader = comando.ExecuteReader();
@@ -136,17 +132,14 @@ namespace TrabalhoTrabalhoso
                 while (reader.Read())
                 {
                     // Instanciando um objeto chamado "aluno" da classe "Aluno"
-                    Aluno aluno = new Aluno();
+                    Disciplina disciplina  = new Disciplina();
                     // Buscando a informação ID do Banco de dados e salvando no atributo correspondente
-                    aluno.IdAluno = reader.GetString("Id");
+                    disciplina.IdDisciplina = reader.GetString("id_disciplina");
                     // Buscando a informação Nome do Banco de dados e salvando no atributo correspondente
-                    aluno.NomeAluno = reader.GetString("Nome");
+                    disciplina.NomeDisciplina = reader.GetString("NomeDisciplina");
                     // Buscando a informação Email do Banco de dados e salvando no atributo correspondente
-                    aluno.EmailAluno = reader.GetString("Email");
-                    // Buscando a informação Cpf do Banco de dados e salvando no atributo correspondente
-                    aluno.CpfAluno = reader.GetInt32("Cpf");
-                    // Adicionando este objeto à lista de alunos (chamada "alunos)
-                    alunos.Add(aluno);
+                    
+                    disciplina.Add(disciplina);
                 }
             }
             // Tratando possíveis erros ...
@@ -158,24 +151,25 @@ namespace TrabalhoTrabalhoso
             // Conseguindo ou não realizar as opções, executar o Finally (Fechando a conexão)
             finally
             {
-                MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
+               
                 // Fechando a conexão com o banco de dados (Tem que fechar sempre);
                 conexao.Close();
             }
             // Retornando a lista de alunos (agora totalmente preenchida)
-            return alunos;
+            return disciplina;
         }
-        public long ObterQuantidadeDeAlunos()
+        public long ObterQuantidadeDisciplinas()
         {
             long quantidade = 0;
+            MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
             // Bloco do Try: Tentando abrir conexão e realizar comando no Banco de Dados
             try
             {
-                MySqlConnection conexao = new MySqlConnection(@"Server=localhost;Port=3306;DataBase=bdprovapaulo;Uid=root;Pwd=kabuterimon12;");
+                
                 // Abrindo a conexão com o banco de dados;
                 conexao.Open();
                 // Instanciando um "Command" com o código SQL e a Conexão estabelecida anteriormente
-                MySqlCommand comando = new MySqlCommand("SELECT COUNT(*) FROM aluno", conexao);
+                MySqlCommand comando = new MySqlCommand("SELECT COUNT(*) FROM disciplina", conexao);
                 // Executando (Efetivando) o comando criando anteriormente e salvando os dados inteiro "quantidade"
                 quantidade = (long)comando.ExecuteScalar();
             }

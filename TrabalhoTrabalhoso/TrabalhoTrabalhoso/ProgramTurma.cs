@@ -21,26 +21,26 @@ namespace TrabalhoTrabalhoso
                 
                 
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("_______________________ ALUNOS __________________________________");
+                Console.WriteLine("_______________________ TURMA __________________________________");
 
               
                               
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("1 - Inserir Aluno");
-                Console.WriteLine("2 - Deletar Aluno");
-                Console.WriteLine("3 - Listar Aluno");
-                Console.WriteLine("4 - Consultar Aluno");
-                Console.WriteLine("5 - Alterar Aluno");
-                Console.WriteLine("6 - Contar Aluno");
+                Console.WriteLine("1 - Inserir Turma");
+                Console.WriteLine("2 - Deletar Turma");
+                Console.WriteLine("3 - Listar Turma");
+                Console.WriteLine("4 - Consultar Turma");
+                Console.WriteLine("5 - Alterar Turma");
+                Console.WriteLine("6 - Contar Turma");
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("_______________________ DISCIPLINA DOS ALUNOS  _______________________");
+                Console.WriteLine("_______________________ ALUNOS NA TURMA  _______________________");
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("7 - Inserir Disciplina para um dos Alunos");
-                Console.WriteLine("8 - Listar todas as Disciplinas dos Alunos");
+                Console.WriteLine("7 - Inserir Aluno para essa Turma");
+                Console.WriteLine("8 - Listar todas as Turma dos Alunos");
                 // Voltando a cor do texto para a cor padrão
                 Console.ResetColor();
                 // Instanciar o meu repositório
-                RepositorioMySQL repositorio = new RepositorioMySQL();
+                RepositorioMySQLturma repositorio = new RepositorioMySQLturma();
                 try
                 {
                     switch (Console.ReadKey().KeyChar)
@@ -48,75 +48,75 @@ namespace TrabalhoTrabalhoso
                         case '1':
                             Console.Clear();
 
-                            // Instanciar o Cliente
-                            Aluno aluno = new Aluno();
+                            // Instanciar o Turma
+                            Turma turma = new Turma();
                             // Solicitar o nome do aluno
-                            Console.WriteLine("Informe o seu nome:");
-                            // Ober o nome do aluno (digitado no teclado)
-                            aluno.NomeAluno = Console.ReadLine();
-                            // Solicitar o email do cliente
-                            Console.WriteLine("Informe o seu e-mail:");
+                            Console.WriteLine("Informe o sua turma:");
+                            // Ober o nome da turma (digitado no teclado)
+                            turma.NomeTurma = Console.ReadLine();
+                            // Solicitar o professor para a turma
+                            Console.WriteLine("Informe o professor:");
                             // Ober o email do aluno (digitado no teclado)
-                            aluno.EmailAluno = Console.ReadLine();
-                            Console.WriteLine("Informe o seu cpf:");
+                            turma.IdProfessor = Console.ReadLine();
+                            Console.WriteLine("Informe o aluno:");
                             // Ober o cpf do cliente (digitado no teclado)
-                            aluno.CpfAluno = int.Parse(Console.ReadLine());
-                            // Chamando o método "Inserir", passando o objeto da classe "Cliente"
-                            // que foi instanciado anteriormente
+                            truma.IdAluno = int.Parse(Console.ReadLine());
+                            truma.IdDisciplina = int.Parse(Console.ReadLine());
+                            
 
-                            repositorio.Inserir(aluno);
+                            repositorio.Inserir(turma);
                             break;
                         case '2':
                             Console.Clear();
-                            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
+                            // Listando todas as turmas retornados pela lista de turma através do método repositorio.Listar()
                             ListarAlunos(repositorio);
                             // Perguntar ao usuário qual é o ID que ele deseja deletar
-                            Console.WriteLine("Informe o ID do usuário que você deseja deletar:");
+                            Console.WriteLine("Informe o ID da turma que você deseja deletar:");
                             // Chamar o método deletar, passando o ID informado pelo usuário
                             repositorio.Apagar(int.Parse(Console.ReadLine()));
                             break;
                         case '3':
                             Console.Clear();
-                            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            ListarAlunos(repositorio);
+                            // Listando todos as trumas retornados pela lista de turmas através do método repositorio.Listar()
+                            ListarTurma(repositorio);
                             break;
                         case '4':
                             Console.Clear();
                             // Perguntar o nome que deseja consultar
-                            Console.WriteLine("Informe o nome que deseja consultar:");
-                            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Aluno AlunoDaVez in repositorio.Listar(Console.ReadLine()))
+                            Console.WriteLine("Informe o nome da turma que deseja consultar:");
+                            // Listando todas as turmas retornados pela lista de turmas através do método repositorio.Listar()
+                            foreach (Turma TurmaDaVez in repositorio.Listar(Console.ReadLine()))
                             {
-                                // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
+                                // Imprimindo as informações de cada truam na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Aluno ...
-                                Console.WriteLine(AlunoDaVez.ToString());
+                                Console.WriteLine(TurmaVez.ToString());
                             }
                             break;
                         case '5':
                             Console.Clear();
                             // Perguntar o nome que deseja consultar
-                            Console.WriteLine("Informe o nome que deseja alterar:");
-                            // Obtendo a lista de Clientes
+                            Console.WriteLine("Informe a turma que deseja alterar:");
+                            // Obtendo a lista de turmas
                             List<Aluno> listaDeAlunos = repositorio.Listar(Console.ReadLine());
-                            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Aluno alunoDaVez in listaDeAlunos)
+                            // Listando todas as turmas  retornados pela lista de cliente através do método repositorio.Listar()
+                            foreach (Turma turmaDaVez in listaDeTurma)
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Cliente ...
-                                Console.WriteLine(alunoDaVez.ToString());
+                                Console.WriteLine(turmaDaVez.ToString());
                             }
-                            if (listaDeAlunos != null && listaDeAlunos.Count > 0)
+                            if (listaDeTurma != null && listaDeTurma.Count > 0)
                             {
                                 // Solicitar o ID de qual dos clientes listados deseja alterar:
-                                Console.WriteLine("Informe, pelo ID, qual dos alunos acima você deseja alterar:");
+                                Console.WriteLine("Informe, pelo ID, qual das turmas acima você deseja alterar:");
                                 // Buscar, na lista de Clientes, pelo Id, o objeto cliente relacionado ...
-                                Aluno AlunoAlterar = listaDeAlunos.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
+                                Turma TurmaAlterar = listaDeTurma.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
                                 // Solicitar o novo nome
-                                Console.WriteLine($"Informe o nome nome para {AlunoAlterar.NomeAluno}:");
-                                // Alterando a Propriedade Nome do Cliente encontrado ...
-                                AlunoAlterar.NomeAluno = Console.ReadLine();
+                                Console.WriteLine($"Informe o nome  para {AlunoTurma.NomeTurma}:");
+                                // Alterando a Propriedade Nome da turma encontrado ...
+                                TurmaAlterar.NomeTurma = Console.ReadLine();
                                 // Efetivando a alteração no Banco de Dados
-                                repositorio.Alterar(AlunoAlterar);
+                                repositorio.Alterar(TurmaAlterar);
                             }
                             else
                             {
@@ -126,62 +126,62 @@ namespace TrabalhoTrabalhoso
                             break;
                         case '6':
                             Console.Clear();
-                            // Informando a quantidade de Clientes registrados, através do método Obter Quantidade ...
-                            Console.WriteLine($"Total de Clientes registrados: {repositorio.ObterQuantidadeDeAlunos()}");
+                            // Informando a quantidade de turmas egistrados, através do método Obter Quantidade ...
+                            Console.WriteLine($"Total de turmass registrados: {repositorio.ObterQuantidadeDeTurmas()}");
                             break;
                         case '7':
                             Console.Clear();
-                            // Perguntar o nome que deseja adicionar carro ...
-                            Console.WriteLine("Informe o nome do cliente para adcionar um Novo Carro:");
-                            // Obtendo a lista de Clientes
-                            List<Aluno> listaDeClientesCarros = repositorio.Listar(Console.ReadLine());
-                            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Aluno AlunoDaVez in listaDeClientesCarros)
+                            // Perguntar o nome que deseja adicionar um professor ...
+                            Console.WriteLine("Informe o nome do turma para adcionar um Novo professor:");
+                            // Obtendo a lista de professores
+                            List<Aluno> listaDeProfessores = repositorio.Listar(Console.ReadLine());
+                            // Listando todos os professores retornados pela lista de cliente através do método repositorio.Listar()
+                            foreach (Professor ProfessorDaVez in listaDeProfessor)
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Cliente ...
                                 Console.WriteLine(AlunoDaVez.ToString());
                             }
-                            if (listaDeClientesCarros != null && listaDeClientesCarros.Count > 0)
+                            if (listaDeProfessor!= null && listaDeProfessor.Count > 0)
                             {
                                 // Solicitar o ID de qual dos clientes listados deseja Adicionar um Novo Carro:
-                                Console.WriteLine("Informe, pelo ID, qual dos clientes acima você deseja Adicionar um Novo Carro:");
+                                Console.WriteLine("Informe, pelo ID, qual dos professores acima você deseja Adicionar um Novo turma:");
                                 // Buscar, na lista de Clientes, pelo Id, o objeto cliente relacionado ...
                                 Aluno AlunoAdicionaraDisciplina = listaDeClientesCarros.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
-                                Disciplina disciplina = new Disciplina();
-                                Console.WriteLine("Informe qual é a disciplina:");
-                                disciplina.NomeDisciplina = Console.ReadLine();
-                                clienteAdicionarCarro.Carros = new List<Carro>();
-                                clienteAdicionarCarro.Carros.Add(carro);
-                                repositorio.InserirDisciplina(clienteAdicionarCarro);
+                                Turma turma = new Turma();
+                                Console.WriteLine("Informe qual é a turma:");
+                                turma.NomeTurma = Console.ReadLine();
+                                PrpofessorAdicionar.Professor = new List<Professor>();
+                                professorAdicionar.Professor.Add(professor);
+                                repositorio.InserirProfessor(professorAdicionarProfessor);
                             }
                             else
                             {
-                                // Caso a lista de Clientes não retorne nenhum registro, exibir mensagem abaixo.
+                                // Caso a lista de de professor não retorne nenhum registro, exibir mensagem abaixo.
                                 Console.WriteLine("Nenhum registro encontrado ...");
                             }
                             break;
                         case '8':
                             Console.Clear();
                             // Perguntar o nome que deseja consultar
-                            Console.WriteLine("Informe o Cliente cujo qual você deseja listar os carros:");
-                            // Obtendo a lista de Clientes
-                            List<Aluno> listaDeCarrosDoCliente = repositorio.Listar(Console.ReadLine());
-                            // Listando todos os clientes retornados pela lista de cliente através do método repositorio.Listar()
-                            foreach (Aluno AlunoDaVez in listaDeCarrosDoCliente)
+                            Console.WriteLine("Informe a turma a qual você deseja listar os professores:");
+                            // Obtendo a lista de turma
+                            List<Turmo> listaDTurmaDoProfesssor = repositorio.Listar(Console.ReadLine());
+                            // 
+                            foreach (Turma ProfessorDaVez in listaDeturmaDoProfessor)
                             {
                                 // Imprimindo as informações de cada cliente na tela, utilizando o "ToString" que foi sobrescrito na classe
                                 // Cliente ...
-                                Console.WriteLine(AlunoDaVez.ToString());
+                                Console.WriteLine(ProfessorDaVez.ToString());
                             }
-                            if (listaDeCarrosDoCliente != null && listaDeCarrosDoCliente.Count > 0)
+                            if (listaDeProfessoresPorturma != null && listaDProfessorDoTurma.Count > 0)
                             {
                                 // Solicitar o ID de qual dos clientes listados deseja alterar:
-                                Console.WriteLine("Informe, pelo ID, qual dos clientes acima você deseja listar os carros:");
+                                Console.WriteLine("Informe, pelo ID, qual das turmas acima você deseja listar osprofessores:");
                                 // Buscar, na lista de Clientes, pelo Id, o objeto cliente relacionado ...
-                                Aluno clienteListarCarro = listaDeCarrosDoCliente.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
-                                List<Carro> carros = repositorio.ListarCarros(clienteListarCarro.Id);
-                                foreach (Carro carro in carros)
+                                Professor professorListarturma = listaDeprofessorTurma.FindLast(c => c.Id == int.Parse(Console.ReadLine()));
+                                List<Professor> carros = repositorio.ListarProfessor(professorListarTurma.Id);
+                                foreach (Professor professor in professor)
                                 {
                                     Console.WriteLine(carro.ToString());
                                 }
@@ -232,14 +232,14 @@ namespace TrabalhoTrabalhoso
             } while (Console.ReadKey().KeyChar == 's');
         }
 
-        public static void ListarAlunos(RepositorioMySQL repositorio)
+        public static void ListarProfessor(RepositorioMySQLprofessor repositorio)
         {
             // Listando todos os alunos retornados pela lista de aluno através do método repositorio.Listar()
-            foreach (Aluno AlunoDaVez in repositorio.Listar())
+            foreach (Turma TurmaDaVez in repositorio.Listar())
             {
                 // Imprimindo as informações de cada aluno na tela, utilizando o "ToString" que foi sobrescrito na classe
                 // Aluno ...
-                Console.WriteLine(AlunoDaVez.ToString());
+                Console.WriteLine(TurmaDaVez.ToString());
             }
         }
     }
